@@ -1,11 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/brand/logo";
-import { Button } from "@/components/ui/button";
-import { GradientBlobs } from "@/components/background/gradient-blobs";
-import { ButterflyLayer } from "@/components/background/butterfly-layer";
+import { HeroAmbientBackground } from "@/components/hero/hero-ambient-background";
+import { HeroButterflyVisual } from "@/components/hero/hero-butterfly-visual";
 import { useSiteUi } from "@/components/providers/site-providers";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import type { SiteSettings } from "@/types/cms";
@@ -14,81 +12,74 @@ interface HeroSectionProps {
   settings: SiteSettings;
 }
 
+function formatHeroTitle(title: string): string[] {
+  const trimmed = title.trim();
+  if (trimmed.includes("\n")) {
+    return trimmed.split("\n").map((l) => l.trim()).filter(Boolean);
+  }
+  const words = trimmed.split(/\s+/);
+  if (words.length <= 3) return [trimmed];
+  return [words.slice(0, 2).join(" "), words.slice(2).join(" ")];
+}
+
 export function HeroSection({ settings }: HeroSectionProps) {
   const { openVerify } = useSiteUi();
+  const titleLines = formatHeroTitle(settings.hero_title);
 
   return (
-    <section className="relative min-h-[92vh] overflow-hidden pt-24 sm:pt-28">
-      <GradientBlobs />
-      <ButterflyLayer />
-      <motion.div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,oklch(1_0.02_350/0.9),transparent)]"
-        aria-hidden
-      />
+    <section className="relative flex min-h-screen flex-col overflow-hidden">
+      <HeroAmbientBackground />
 
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
-        className="relative mx-auto flex max-w-6xl flex-col items-center px-5 pb-20 pt-8 text-center sm:px-8 sm:pt-14"
+        className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col items-center px-5 pb-16 pt-28 text-center sm:px-8 sm:pb-20 sm:pt-32"
       >
-        <motion.div variants={fadeUp} className="mb-10">
-          <Logo size="lg" className="items-center" />
+        <motion.div variants={fadeUp} className="mb-6 sm:mb-8">
+          <Logo size="md" className="items-center" />
+        </motion.div>
+
+        <motion.div variants={fadeUp} className="w-full flex-1 py-2 sm:py-4">
+          <HeroButterflyVisual />
+        </motion.div>
+
+        <motion.div variants={fadeUp} className="mt-2 max-w-2xl sm:mt-4">
+          <h1 className="text-balance text-3xl font-light leading-[1.12] tracking-tight text-foreground sm:text-5xl md:text-[3.25rem]">
+            {titleLines.map((line, i) => (
+              <span key={line} className="block">
+                {line}
+                {i < titleLines.length - 1 ? "" : null}
+              </span>
+            ))}
+          </h1>
         </motion.div>
 
         <motion.p
           variants={fadeUp}
-          className="mb-4 text-[0.65rem] font-medium tracking-[0.5em] uppercase text-[oklch(0.55_0.06_15)]"
-        >
-          Luxury Biotech Beauty
-        </motion.p>
-
-        <motion.h1
-          variants={fadeUp}
-          className="max-w-3xl text-balance text-3xl font-light leading-[1.15] tracking-tight text-foreground sm:text-5xl md:text-6xl"
-        >
-          {settings.hero_title}
-        </motion.h1>
-
-        <motion.p
-          variants={fadeUp}
-          className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
+          className="mt-5 max-w-md text-pretty text-sm leading-relaxed text-muted-foreground sm:mt-6 sm:max-w-lg sm:text-base"
         >
           {settings.hero_subtitle}
         </motion.p>
 
-        <motion.div
-          variants={fadeUp}
-          className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-4"
-        >
-          <Button
-            size="lg"
-            className="h-11 rounded-full bg-[oklch(0.42_0.06_15)] px-8 text-white hover:bg-[oklch(0.38_0.06_15)]"
+        <motion.div variants={fadeUp} className="mt-8 sm:mt-10">
+          <button
+            type="button"
             onClick={openVerify}
+            className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full px-10 text-sm font-medium tracking-wide text-white transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
           >
-            Verify authenticity
-          </Button>
-          <Link
-            href="/#products"
-            className="inline-flex h-11 items-center justify-center rounded-full border border-rose-200/70 bg-white/70 px-8 text-sm font-medium text-foreground backdrop-blur-sm transition-colors hover:bg-white"
-          >
-            Explore products
-          </Link>
+            <span
+              className="absolute inset-0 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500"
+              aria-hidden
+            />
+            <span
+              className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-70"
+              aria-hidden
+            />
+            <span className="absolute inset-0 rounded-full shadow-[0_8px_32px_-4px_rgba(139,92,246,0.55)] transition-shadow duration-500 group-hover:shadow-[0_12px_48px_-4px_rgba(168,85,247,0.65)]" />
+            <span className="relative">Verify Authenticity</span>
+          </button>
         </motion.div>
-
-        {settings.intro_video ? (
-          <motion.div variants={fadeUp} className="mt-14 w-full max-w-2xl">
-            <div className="overflow-hidden rounded-2xl border border-white/60 bg-white/40 p-1 shadow-[0_24px_80px_-20px_oklch(0.5_0.05_15/0.2)] backdrop-blur-md">
-              <video
-                src={settings.intro_video}
-                className="aspect-video w-full rounded-xl object-cover"
-                controls
-                playsInline
-                preload="metadata"
-              />
-            </div>
-          </motion.div>
-        ) : null}
       </motion.div>
     </section>
   );

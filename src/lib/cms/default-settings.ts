@@ -6,9 +6,9 @@ export function getServerDefaultSettings(): SiteSettings {
     site_enabled: true,
     maintenance_mode: false,
     maintenance_text: "",
-    hero_title: "The science of luminous skin.",
+    hero_title: "Advanced care for a better you",
     hero_subtitle:
-      "Precision biotech formulations crafted for timeless feminine radiance and cellular renewal.",
+      "Premium pharmaceutical solutions created with science, quality and care.",
     intro_video: "",
   };
 }

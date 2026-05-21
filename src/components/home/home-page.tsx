@@ -1,6 +1,7 @@
 "use client";
 
 import { HeroSection } from "@/components/hero/hero-section";
+import { FlagshipShowcase } from "@/components/showcase/flagship-showcase";
 import { MaintenanceOverlay } from "@/components/layout/maintenance-overlay";
 import { useSettings } from "@/hooks/use-settings";
 
@@ -27,6 +28,7 @@ export function HomePage() {
     <>
       <MaintenanceOverlay settings={settings} />
       <HeroSection settings={settings} />
+      <FlagshipShowcase />
     </>
   );
 }

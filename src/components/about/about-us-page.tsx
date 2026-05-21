@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GradientBlobs } from "@/components/background/gradient-blobs";
+import { BiotechAtmosphere } from "@/components/background/biotech-atmosphere";
 import { AboutSectionBlock } from "@/components/about/about-section-block";
 import {
   ABOUT_HERO,
@@ -14,19 +14,14 @@ import { fadeUp, staggerContainer } from "@/lib/motion";
 export function AboutUsPage() {
   return (
     <article className="relative overflow-hidden">
-      <GradientBlobs />
+      <BiotechAtmosphere variant="about" />
 
-      {/* Hero */}
-      <section className="relative border-b border-white/40 pt-28 pb-16 sm:pt-36 sm:pb-24">
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,oklch(1_0.02_350/0.85),transparent)]"
-          aria-hidden
-        />
+      <section className="relative border-b border-white/30 pt-28 pb-16 sm:pt-36 sm:pb-24">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="relative mx-auto max-w-6xl px-5 sm:px-8"
+          className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8"
         >
           <motion.p
             variants={fadeUp}
@@ -42,28 +37,22 @@ export function AboutUsPage() {
           </motion.h1>
           <motion.div
             variants={fadeUp}
-            className="mt-10 h-px w-24 bg-gradient-to-r from-[oklch(0.72_0.06_15)] to-transparent"
+            className="mt-10 h-px w-24 bg-gradient-to-r from-[oklch(0.72_0.06_265)] via-[oklch(0.7_0.08_250)] to-transparent"
             aria-hidden
           />
         </motion.div>
       </section>
 
-      {/* Alternating content sections */}
-      <div className="relative space-y-20 py-20 sm:space-y-28 sm:py-28">
+      <div className="relative z-10 space-y-20 py-20 sm:space-y-28 sm:py-28">
         {ABOUT_SECTIONS.map((section, index) => (
           <AboutSectionBlock key={section.id} section={section} index={index} />
         ))}
       </div>
 
-      {/* European Quality Emphasis */}
       <section
-        className="relative border-t border-white/50 bg-white/30 py-20 sm:py-28"
+        className="relative z-10 border-t border-white/35 py-20 sm:py-28"
         aria-labelledby="about-quality-emphasis"
       >
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_80%_50%,oklch(0.94_0.04_25/0.5),transparent)]"
-          aria-hidden
-        />
         <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
           <motion.div
             initial="hidden"
@@ -91,9 +80,9 @@ export function AboutUsPage() {
               <motion.div
                 key={pillar.title}
                 variants={fadeUp}
-                className="group rounded-2xl border border-white/70 bg-white/55 p-6 shadow-[0_16px_48px_-20px_oklch(0.45_0.04_15/0.18)] backdrop-blur-md transition-shadow hover:shadow-[0_24px_56px_-16px_oklch(0.45_0.05_15/0.22)] sm:p-8"
+                className="group rounded-2xl border border-white/55 bg-white/42 p-6 shadow-[0_16px_48px_-22px_oklch(0.5_0.06_280/0.14)] backdrop-blur-sm transition-shadow hover:shadow-[0_24px_56px_-18px_oklch(0.5_0.07_280/0.18)] sm:p-8"
               >
-                <div className="mb-4 h-px w-10 bg-gradient-to-r from-[oklch(0.72_0.06_15)] to-transparent transition-all group-hover:w-16" />
+                <div className="mb-4 h-px w-10 bg-gradient-to-r from-[oklch(0.72_0.06_265)] to-transparent transition-all group-hover:w-16" />
                 <h3 className="text-lg font-medium tracking-tight text-foreground">
                   {pillar.title}
                 </h3>

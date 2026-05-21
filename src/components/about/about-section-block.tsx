@@ -31,12 +31,12 @@ export function AboutSectionBlock({ section, index }: AboutSectionBlockProps) {
         <div className="lg:col-span-5">
           <div
             className={cn(
-              "relative overflow-hidden rounded-3xl border border-white/70 p-8 sm:p-10",
-              "bg-white/50 shadow-[0_20px_60px_-24px_oklch(0.45_0.04_15/0.2)] backdrop-blur-md",
+              "relative overflow-hidden rounded-3xl border border-white/55 p-8 sm:p-10",
+              "bg-white/42 shadow-[0_20px_60px_-26px_oklch(0.5_0.06_280/0.14)] backdrop-blur-sm",
             )}
           >
             <div
-              className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[radial-gradient(circle,oklch(0.92_0.05_350)_0%,transparent_70%)] blur-2xl"
+              className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[radial-gradient(circle,oklch(0.82_0.1_250/0.12)_0%,transparent_70%)] blur-2xl"
               aria-hidden
             />
             <p className="mb-3 text-[0.65rem] font-medium tracking-[0.4em] uppercase text-[oklch(0.55_0.06_15)]">

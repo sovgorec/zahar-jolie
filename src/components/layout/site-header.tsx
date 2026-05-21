@@ -32,7 +32,7 @@ export function SiteHeader() {
             Products
           </Link>
           <Link href="/about" className="transition-colors hover:text-foreground">
-            About
+            About Us
           </Link>
         </nav>
         <div className="flex items-center gap-2 sm:gap-3">

@@ -14,7 +14,7 @@ export function SiteFooter() {
             Products
           </Link>
           <Link href="/about" className="transition-colors hover:text-foreground">
-            About
+            About Us
           </Link>
         </nav>
         <p className="text-xs text-muted-foreground">

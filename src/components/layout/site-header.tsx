@@ -28,28 +28,25 @@ export function SiteHeader() {
           <Link href="/" className="transition-colors hover:text-foreground">
             Home
           </Link>
-          <Link href="/#products" className="transition-colors hover:text-foreground">
-            Products
-          </Link>
           <Link href="/about" className="transition-colors hover:text-foreground">
             About Us
           </Link>
         </nav>
         <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            href="/about"
+            className="inline-flex h-7 items-center justify-center rounded-full border border-rose-200/70 bg-white/60 px-4 text-[0.8rem] font-medium text-foreground transition-colors hover:bg-white md:hidden"
+          >
+            About Us
+          </Link>
           <Button
             variant="outline"
             size="sm"
-            className="hidden rounded-full border-rose-200/80 bg-white/60 px-4 sm:inline-flex"
+            className="rounded-full border-rose-200/80 bg-white/60 px-4"
             onClick={openVerify}
           >
             Verify
           </Button>
-          <Link
-            href="/#products"
-            className="inline-flex h-7 items-center justify-center rounded-full bg-[oklch(0.42_0.06_15)] px-4 text-[0.8rem] font-medium text-white transition-colors hover:bg-[oklch(0.38_0.06_15)]"
-          >
-            Products
-          </Link>
         </div>
       </div>
     </motion.header>

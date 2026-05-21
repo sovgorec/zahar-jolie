@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Logo } from "@/components/brand/logo";
 import { HeroAmbientBackground } from "@/components/hero/hero-ambient-background";
 import { HeroButterflyVisual } from "@/components/hero/hero-butterfly-visual";
 import { useSiteUi } from "@/components/providers/site-providers";
@@ -34,22 +33,20 @@ export function HeroSection({ settings }: HeroSectionProps) {
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
-        className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col items-center px-5 pb-16 pt-28 text-center sm:px-8 sm:pb-20 sm:pt-32"
+        className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-0 px-5 pb-20 pt-24 text-center sm:px-8 sm:pb-24 sm:pt-28"
       >
-        <motion.div variants={fadeUp} className="mb-6 sm:mb-8">
-          <Logo size="md" className="items-center" />
-        </motion.div>
-
-        <motion.div variants={fadeUp} className="w-full flex-1 py-2 sm:py-4">
+        <motion.div
+          variants={fadeUp}
+          className="flex w-full flex-[1.2] items-center justify-center py-4 sm:py-6"
+        >
           <HeroButterflyVisual />
         </motion.div>
 
-        <motion.div variants={fadeUp} className="mt-2 max-w-2xl sm:mt-4">
+        <motion.div variants={fadeUp} className="max-w-2xl">
           <h1 className="text-balance text-3xl font-light leading-[1.12] tracking-tight text-foreground sm:text-5xl md:text-[3.25rem]">
-            {titleLines.map((line, i) => (
+            {titleLines.map((line) => (
               <span key={line} className="block">
                 {line}
-                {i < titleLines.length - 1 ? "" : null}
               </span>
             ))}
           </h1>

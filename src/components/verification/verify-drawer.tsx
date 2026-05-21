@@ -8,7 +8,6 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
@@ -24,6 +23,13 @@ interface VerifyDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+const fadeSlide = {
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -6 },
+  transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const },
+};
 
 export function VerifyDrawer({ open, onOpenChange }: VerifyDrawerProps) {
   const [serial, setSerial] = useState("");
@@ -63,107 +69,127 @@ export function VerifyDrawer({ open, onOpenChange }: VerifyDrawerProps) {
   }
 
   return (
-    <Drawer open={open} onOpenChange={handleOpenChange}>
-      <DrawerContent className="border-white/60 bg-white/92 backdrop-blur-xl">
-        <DrawerHeader className="text-left">
-          <DrawerTitle className="text-xl font-medium tracking-tight">
-            Authenticity verification
-          </DrawerTitle>
-          <DrawerDescription>
-            Enter your product serial number to confirm genuine Jolie formulation.
-          </DrawerDescription>
-        </DrawerHeader>
+    <Drawer open={open} onOpenChange={handleOpenChange} shouldScaleBackground>
+      <DrawerContent
+        centered
+        className="border-white/55 bg-white/72 text-popover-foreground shadow-[0_28px_80px_-28px_oklch(0.45_0.08_280/0.28)] backdrop-blur-xl supports-backdrop-filter:bg-white/65"
+      >
+        <div className="relative px-5 pb-6 pt-2 sm:px-8 sm:pb-8">
+          <DrawerHeader className="px-0 pb-0 pt-2 text-center sm:text-left">
+            <p className="mb-2 text-[0.6rem] font-medium tracking-[0.42em] uppercase text-[oklch(0.55_0.06_15)]">
+              Authenticity
+            </p>
+            <DrawerTitle>Verify your product</DrawerTitle>
+            <DrawerDescription className="mx-auto max-w-sm sm:mx-0">
+              Enter your serial number to confirm a genuine Jolie formulation.
+            </DrawerDescription>
+          </DrawerHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-5 px-4 pb-2">
-          <div className="space-y-2">
-            <Label htmlFor="serial" className="text-xs tracking-[0.2em] uppercase">
-              Serial number
-            </Label>
-            <Input
-              id="serial"
-              value={serial}
-              onChange={(e) => setSerial(e.target.value)}
-              placeholder="JOL-2026-001"
-              className="h-11 rounded-xl border-rose-100/80 bg-white/80 font-mono tracking-wider"
-              autoComplete="off"
-              disabled={state === "loading"}
-            />
-          </div>
-
-          <AnimatePresence mode="wait">
-            {state === "loading" ? (
-              <motion.div
-                key="loading"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex items-center gap-2 text-sm text-muted-foreground"
+          <form
+            onSubmit={handleSubmit}
+            className="mx-auto mt-8 flex w-full max-w-md flex-col gap-6"
+          >
+            <div className="space-y-2.5">
+              <Label
+                htmlFor="serial"
+                className="text-[0.65rem] font-medium tracking-[0.28em] uppercase text-[oklch(0.55_0.06_15)]"
               >
-                <Loader2 className="size-4 animate-spin" />
-                Verifying…
-              </motion.div>
-            ) : null}
+                Serial number
+              </Label>
+              <Input
+                id="serial"
+                value={serial}
+                onChange={(e) => setSerial(e.target.value)}
+                placeholder="JOL-2026-001"
+                className="h-12 w-full max-w-md rounded-xl border-white/70 bg-white/75 px-4 text-center font-mono text-sm tracking-widest shadow-[inset_0_1px_2px_oklch(0.5_0.04_280/0.06)] backdrop-blur-sm sm:text-left"
+                autoComplete="off"
+                disabled={state === "loading"}
+              />
+            </div>
 
-            {state === "success" && result ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="rounded-xl border border-emerald-200/80 bg-emerald-50/60 p-4"
-              >
-                <motion.div className="flex items-start gap-3">
-                  <ShieldCheck className="mt-0.5 size-5 shrink-0 text-emerald-700" />
-                  <div>
-                    <p className="font-medium text-emerald-900">Authentic product</p>
-                    <p className="mt-1 text-sm text-emerald-800/80">
-                      Serial <span className="font-mono">{result.serial}</span>
-                      {result.product_name ? ` — ${result.product_name}` : ""}
-                    </p>
-                    {result.notes ? (
-                      <p className="mt-2 text-xs text-emerald-800/70">{result.notes}</p>
-                    ) : null}
+            <AnimatePresence mode="wait">
+              {state === "loading" ? (
+                <motion.div
+                  key="loading"
+                  {...fadeSlide}
+                  className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
+                >
+                  <Loader2 className="size-4 animate-spin text-violet-500/80" />
+                  Verifying…
+                </motion.div>
+              ) : null}
+
+              {state === "success" && result ? (
+                <motion.div
+                  key="success"
+                  {...fadeSlide}
+                  className="rounded-2xl border border-emerald-200/60 bg-emerald-50/50 p-4 backdrop-blur-sm"
+                >
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="mt-0.5 size-5 shrink-0 text-emerald-700" />
+                    <div>
+                      <p className="font-medium text-emerald-900">Authentic product</p>
+                      <p className="mt-1 text-sm leading-relaxed text-emerald-800/85">
+                        Serial <span className="font-mono">{result.serial}</span>
+                        {result.product_name ? ` — ${result.product_name}` : ""}
+                      </p>
+                      {result.notes ? (
+                        <p className="mt-2 text-xs text-emerald-800/70">{result.notes}</p>
+                      ) : null}
+                    </div>
                   </div>
                 </motion.div>
-              </motion.div>
-            ) : null}
+              ) : null}
 
-            {state === "error" && result ? (
-              <motion.div
-                key="error"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="rounded-xl border border-rose-200/80 bg-rose-50/50 p-4"
-              >
-                <div className="flex items-start gap-3">
-                  <ShieldX className="mt-0.5 size-5 shrink-0 text-rose-700" />
-                  <div>
-                    <p className="font-medium text-rose-900">Not verified</p>
-                    <p className="mt-1 text-sm text-rose-800/80">
-                      {result.error === "network_error"
-                        ? "Connection error. Please try again."
-                        : "This serial was not found in our registry."}
-                    </p>
+              {state === "error" && result ? (
+                <motion.div
+                  key="error"
+                  {...fadeSlide}
+                  className="rounded-2xl border border-rose-200/60 bg-rose-50/45 p-4 backdrop-blur-sm"
+                >
+                  <div className="flex items-start gap-3">
+                    <ShieldX className="mt-0.5 size-5 shrink-0 text-rose-700" />
+                    <div>
+                      <p className="font-medium text-rose-900">Not verified</p>
+                      <p className="mt-1 text-sm leading-relaxed text-rose-800/85">
+                        {result.error === "network_error"
+                          ? "Connection error. Please try again."
+                          : "This serial was not found in our registry."}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
 
-          <DrawerFooter className="flex-row gap-2 px-0">
-            <DrawerClose className="flex-1">
-              <Button variant="outline" className="w-full rounded-full">
-                Close
-              </Button>
-            </DrawerClose>
-            <Button
-              type="submit"
-              className="flex-1 rounded-full bg-[oklch(0.42_0.06_15)] text-white hover:bg-[oklch(0.38_0.06_15)]"
-              disabled={state === "loading" || !serial.trim()}
-            >
-              Verify
-            </Button>
-          </DrawerFooter>
-        </form>
+            <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-center">
+              <DrawerClose className="sm:flex-1 sm:max-w-[11rem]">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="h-11 w-full rounded-full border-white/70 bg-white/50 backdrop-blur-sm"
+                >
+                  Close
+                </Button>
+              </DrawerClose>
+              <button
+                type="submit"
+                disabled={state === "loading" || !serial.trim()}
+                className="group relative inline-flex h-11 w-full items-center justify-center overflow-hidden rounded-full text-sm font-medium tracking-wide text-white transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 sm:flex-1 sm:max-w-[14rem]"
+              >
+                <span
+                  className="absolute inset-0 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500"
+                  aria-hidden
+                />
+                <span
+                  className="absolute inset-0 rounded-full opacity-0 shadow-[0_8px_28px_-4px_rgba(139,92,246,0.5)] transition-opacity duration-300 group-hover:opacity-100"
+                  aria-hidden
+                />
+                <span className="relative">Verify</span>
+              </button>
+            </div>
+          </form>
+        </div>
       </DrawerContent>
     </Drawer>
   );

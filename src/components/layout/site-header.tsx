@@ -16,8 +16,10 @@ export function SiteHeader() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "fixed inset-x-0 top-0 z-40 border-b border-white/40",
-        "bg-white/55 backdrop-blur-xl supports-backdrop-filter:bg-white/45",
+        "fixed inset-x-0 top-0 z-40",
+        "border-b border-white/50 bg-white/72 shadow-[0_1px_24px_-4px_oklch(0.55_0.04_280/0.08)]",
+        "backdrop-blur-md backdrop-saturate-150",
+        "supports-backdrop-filter:bg-white/65",
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:h-[4.5rem] sm:px-8">

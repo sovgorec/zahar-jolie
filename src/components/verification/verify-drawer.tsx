@@ -72,27 +72,33 @@ export function VerifyDrawer({ open, onOpenChange }: VerifyDrawerProps) {
     <Drawer open={open} onOpenChange={handleOpenChange} shouldScaleBackground>
       <DrawerContent
         centered
-        className="border-white/55 bg-white/72 text-popover-foreground shadow-[0_28px_80px_-28px_oklch(0.45_0.08_280/0.28)] backdrop-blur-xl supports-backdrop-filter:bg-white/65"
+        hideHandle
+        className="flex flex-col overflow-hidden border-white/55 bg-white/72 p-0 text-popover-foreground shadow-[0_28px_80px_-28px_oklch(0.45_0.08_280/0.28)] backdrop-blur-xl supports-backdrop-filter:bg-white/65"
       >
-        <div className="relative px-5 pb-6 pt-2 sm:px-8 sm:pb-8">
-          <DrawerHeader className="px-0 pb-0 pt-2 text-center sm:text-left">
+        <div className="flex w-full flex-col items-center px-5 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] pt-3 text-center sm:px-8 sm:pb-8">
+          <div
+            className="mb-5 h-1 w-12 shrink-0 rounded-full bg-[oklch(0.75_0.04_280/0.35)] sm:w-14"
+            aria-hidden
+          />
+
+          <DrawerHeader className="w-full max-w-md items-center px-0 pb-0 pt-0 text-center">
             <p className="mb-2 text-[0.6rem] font-medium tracking-[0.42em] uppercase text-[oklch(0.55_0.06_15)]">
               Authenticity
             </p>
-            <DrawerTitle>Verify your product</DrawerTitle>
-            <DrawerDescription className="mx-auto max-w-sm sm:mx-0">
+            <DrawerTitle className="text-center">Verify your product</DrawerTitle>
+            <DrawerDescription className="mx-auto max-w-sm text-center">
               Enter your serial number to confirm a genuine Jolie formulation.
             </DrawerDescription>
           </DrawerHeader>
 
           <form
             onSubmit={handleSubmit}
-            className="mx-auto mt-8 flex w-full max-w-md flex-col gap-6"
+            className="mt-8 flex w-full max-w-md flex-col items-center gap-6"
           >
-            <div className="space-y-2.5">
+            <div className="flex w-full flex-col items-center gap-2.5">
               <Label
                 htmlFor="serial"
-                className="text-[0.65rem] font-medium tracking-[0.28em] uppercase text-[oklch(0.55_0.06_15)]"
+                className="text-center text-[0.65rem] font-medium tracking-[0.28em] uppercase text-[oklch(0.55_0.06_15)]"
               >
                 Serial number
               </Label>
@@ -101,7 +107,7 @@ export function VerifyDrawer({ open, onOpenChange }: VerifyDrawerProps) {
                 value={serial}
                 onChange={(e) => setSerial(e.target.value)}
                 placeholder="JOL-2026-001"
-                className="h-12 w-full max-w-md rounded-xl border-white/70 bg-white/75 px-4 text-center font-mono text-sm tracking-widest shadow-[inset_0_1px_2px_oklch(0.5_0.04_280/0.06)] backdrop-blur-sm sm:text-left"
+                className="h-12 w-full rounded-xl border-white/70 bg-white/75 px-4 text-center font-mono text-sm tracking-widest shadow-[inset_0_1px_2px_oklch(0.5_0.04_280/0.06)] backdrop-blur-sm"
                 autoComplete="off"
                 disabled={state === "loading"}
               />
@@ -112,7 +118,7 @@ export function VerifyDrawer({ open, onOpenChange }: VerifyDrawerProps) {
                 <motion.div
                   key="loading"
                   {...fadeSlide}
-                  className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
+                  className="flex w-full items-center justify-center gap-2 text-sm text-muted-foreground"
                 >
                   <Loader2 className="size-4 animate-spin text-violet-500/80" />
                   Verifying…
@@ -123,21 +129,17 @@ export function VerifyDrawer({ open, onOpenChange }: VerifyDrawerProps) {
                 <motion.div
                   key="success"
                   {...fadeSlide}
-                  className="rounded-2xl border border-emerald-200/60 bg-emerald-50/50 p-4 backdrop-blur-sm"
+                  className="w-full rounded-2xl border border-emerald-200/60 bg-emerald-50/50 p-4 text-center backdrop-blur-sm"
                 >
-                  <div className="flex items-start gap-3">
-                    <ShieldCheck className="mt-0.5 size-5 shrink-0 text-emerald-700" />
-                    <div>
-                      <p className="font-medium text-emerald-900">Authentic product</p>
-                      <p className="mt-1 text-sm leading-relaxed text-emerald-800/85">
-                        Serial <span className="font-mono">{result.serial}</span>
-                        {result.product_name ? ` — ${result.product_name}` : ""}
-                      </p>
-                      {result.notes ? (
-                        <p className="mt-2 text-xs text-emerald-800/70">{result.notes}</p>
-                      ) : null}
-                    </div>
-                  </div>
+                  <ShieldCheck className="mx-auto size-5 text-emerald-700" />
+                  <p className="mt-2 font-medium text-emerald-900">Authentic Product</p>
+                  <p className="mt-1 text-sm leading-relaxed text-emerald-800/85">
+                    Original: <span className="font-mono">{result.serial}</span>
+                    {result.product_name ? ` — ${result.product_name}` : ""}
+                  </p>
+                  {result.notes ? (
+                    <p className="mt-2 text-xs text-emerald-800/70">{result.notes}</p>
+                  ) : null}
                 </motion.div>
               ) : null}
 
@@ -145,25 +147,21 @@ export function VerifyDrawer({ open, onOpenChange }: VerifyDrawerProps) {
                 <motion.div
                   key="error"
                   {...fadeSlide}
-                  className="rounded-2xl border border-rose-200/60 bg-rose-50/45 p-4 backdrop-blur-sm"
+                  className="w-full rounded-2xl border border-rose-200/60 bg-rose-50/45 p-4 text-center backdrop-blur-sm"
                 >
-                  <div className="flex items-start gap-3">
-                    <ShieldX className="mt-0.5 size-5 shrink-0 text-rose-700" />
-                    <div>
-                      <p className="font-medium text-rose-900">Not verified</p>
-                      <p className="mt-1 text-sm leading-relaxed text-rose-800/85">
-                        {result.error === "network_error"
-                          ? "Connection error. Please try again."
-                          : "This serial was not found in our registry."}
-                      </p>
-                    </div>
-                  </div>
+                  <ShieldX className="mx-auto size-5 text-rose-700" />
+                  <p className="mt-2 font-medium text-rose-900">Not verified</p>
+                  <p className="mt-1 text-sm leading-relaxed text-rose-800/85">
+                    {result.error === "network_error"
+                      ? "Connection error. Please try again."
+                      : "This serial was not found in our registry."}
+                  </p>
                 </motion.div>
               ) : null}
             </AnimatePresence>
 
-            <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-center">
-              <DrawerClose className="sm:flex-1 sm:max-w-[11rem]">
+            <div className="flex w-full max-w-sm flex-col-reverse items-stretch gap-3 pt-2 sm:flex-row sm:justify-center">
+              <DrawerClose className="flex-1 sm:max-w-[11rem]">
                 <Button
                   type="button"
                   variant="outline"
@@ -175,7 +173,7 @@ export function VerifyDrawer({ open, onOpenChange }: VerifyDrawerProps) {
               <button
                 type="submit"
                 disabled={state === "loading" || !serial.trim()}
-                className="group relative inline-flex h-11 w-full items-center justify-center overflow-hidden rounded-full text-sm font-medium tracking-wide text-white transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 sm:flex-1 sm:max-w-[14rem]"
+                className="group relative inline-flex h-11 flex-1 items-center justify-center overflow-hidden rounded-full text-sm font-medium tracking-wide text-white transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 sm:max-w-[14rem]"
               >
                 <span
                   className="absolute inset-0 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500"

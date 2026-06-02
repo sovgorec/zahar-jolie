@@ -48,10 +48,12 @@ function DrawerOverlay({
 function DrawerContent({
   className,
   centered = false,
+  hideHandle = false,
   children,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Content> & {
   centered?: boolean
+  hideHandle?: boolean
 }) {
   return (
     <DrawerPortal data-slot="drawer-portal">
@@ -70,7 +72,7 @@ function DrawerContent({
                 "data-[vaul-drawer-direction=bottom]:rounded-t-2xl sm:data-[vaul-drawer-direction=bottom]:rounded-2xl",
                 "data-[vaul-drawer-direction=bottom]:border data-[vaul-drawer-direction=bottom]:border-white/60",
                 "data-[vaul-drawer-direction=bottom]:mb-3 sm:data-[vaul-drawer-direction=bottom]:mb-8",
-                "pb-[max(1.25rem,env(safe-area-inset-bottom))]",
+                "data-[vaul-drawer-direction=bottom]:overflow-hidden data-[vaul-drawer-direction=bottom]:pb-0",
               ]
             : [
                 "data-[vaul-drawer-direction=bottom]:inset-x-0",
@@ -81,7 +83,9 @@ function DrawerContent({
         )}
         {...props}
       >
-        <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-[oklch(0.75_0.04_280/0.35)] group-data-[vaul-drawer-direction=bottom]/drawer-content:block sm:mt-4 sm:w-14" />
+        {!hideHandle ? (
+          <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-[oklch(0.75_0.04_280/0.35)] group-data-[vaul-drawer-direction=bottom]/drawer-content:block sm:mt-4 sm:w-14" />
+        ) : null}
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>

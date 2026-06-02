@@ -33,7 +33,7 @@ export function HeroSection({ settings }: HeroSectionProps) {
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
-        className="relative z-10 mx-auto grid h-full min-h-0 w-full max-w-5xl grid-rows-[auto_auto_minmax(0,1fr)_auto] items-center px-5 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] pt-[calc(5.25rem+env(safe-area-inset-top,0px))] text-center sm:px-8 sm:pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:pt-[calc(4rem+env(safe-area-inset-top,0px))]"
+        className="relative z-10 mx-auto grid h-full min-h-0 w-full max-w-5xl grid-rows-[auto_auto_minmax(0,1fr)_auto] items-center px-5 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] pt-[calc(5.25rem+env(safe-area-inset-top,0px))] text-center sm:px-8 sm:pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:pt-[calc(4rem+30px+env(safe-area-inset-top,0px))]"
       >
         {/* Title — CMS only */}
         <motion.div variants={fadeUp} className="shrink-0 max-w-2xl justify-self-center">
